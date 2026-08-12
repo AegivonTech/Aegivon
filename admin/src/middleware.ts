@@ -5,10 +5,11 @@ import * as jose from 'jose';
 const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret_key';
 
 export async function middleware(request: NextRequest) {
-  // Define protected paths (all except /login)
+  // Define protected paths (all except /login and /api)
   const isLoginPage = request.nextUrl.pathname.startsWith('/login');
+  const isApiRoute = request.nextUrl.pathname.startsWith('/api/');
 
-  if (!isLoginPage) {
+  if (!isLoginPage && !isApiRoute) {
     const token = request.cookies.get('admin_token')?.value;
 
     if (!token) {
