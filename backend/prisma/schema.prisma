@@ -1,0 +1,195 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  SUPER_ADMIN
+  ADMIN
+  EDITOR
+}
+
+model User {
+  id           String        @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  email        String        @unique
+  passwordHash String
+  role         Role          @default(EDITOR)
+  createdAt    DateTime      @default(now())
+  activityLogs ActivityLog[]
+}
+
+enum EnquiryType {
+  GENERAL
+  PRODUCT_RAKSHAK
+  PARTNERSHIP
+  INVESTMENT_SUPPORT
+  MEDIA
+}
+
+enum EnquiryStatus {
+  NEW
+  IN_PROGRESS
+  CONTACTED
+  RESOLVED
+}
+
+model Enquiry {
+  id           String        @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  email        String
+  organization String?
+  type         EnquiryType   @default(GENERAL)
+  subject      String
+  message      String
+  status       EnquiryStatus @default(NEW)
+  notes        String?
+  createdAt    DateTime      @default(now())
+}
+
+enum JobStatus {
+  OPEN
+  COMING_SOON
+  CLOSED
+}
+
+model JobRole {
+  id           String        @id @default(auto()) @map("_id") @db.ObjectId
+  title        String
+  department   String
+  description  String
+  requirements String
+  status       JobStatus     @default(OPEN)
+  createdAt    DateTime      @default(now())
+  applications Application[]
+}
+
+enum AppStatus {
+  NEW
+  REVIEWING
+  SHORTLISTED
+  INTERVIEW
+  SELECTED
+  REJECTED
+}
+
+model Application {
+  id             String    @id @default(auto()) @map("_id") @db.ObjectId
+  roleId         String    @db.ObjectId
+  role           JobRole   @relation(fields: [roleId], references: [id])
+  name           String
+  email          String
+  phone          String
+  college        String
+  degree         String
+  graduationYear String
+  skills         String
+  portfolioUrl   String?
+  githubUrl      String?
+  linkedinUrl    String?
+  resumeUrl      String?
+  answers        Json?
+  status         AppStatus @default(NEW)
+  notes          String?
+  createdAt      DateTime  @default(now())
+}
+
+enum ProductStatus {
+  RESEARCH
+  PROTOTYPE
+  MVP
+  TESTING
+  PILOT
+  LIVE
+}
+
+model Product {
+  id               String           @id @default(auto()) @map("_id") @db.ObjectId
+  name             String
+  slug             String           @unique
+  shortDescription String
+  fullDescription  String
+  status           ProductStatus    @default(RESEARCH)
+  visibility       Boolean          @default(true)
+  features         ProductFeature[]
+  roadmapPhases    RoadmapPhase[]
+}
+
+enum FeatureStatus {
+  CONCEPT
+  IN_DEVELOPMENT
+  PLANNED
+  PROTOTYPE
+}
+
+model ProductFeature {
+  id          String        @id @default(auto()) @map("_id") @db.ObjectId
+  productId   String        @db.ObjectId
+  product     Product       @relation(fields: [productId], references: [id])
+  title       String
+  description String
+  status      FeatureStatus @default(CONCEPT)
+}
+
+enum PhaseStatus {
+  COMPLETE
+  CURRENT
+  UPCOMING
+}
+
+model RoadmapPhase {
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  productId    String      @db.ObjectId
+  product      Product     @relation(fields: [productId], references: [id])
+  phase        String
+  title        String
+  description  String
+  status       PhaseStatus @default(UPCOMING)
+  displayOrder Int         @default(0)
+}
+
+model TeamMember {
+  id           String  @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  role         String
+  bio          String
+  photoUrl     String?
+  linkedin     String?
+  github       String?
+  portfolioUrl String?
+  skills       String?
+  displayOrder Int     @default(0)
+  visible      Boolean @default(true)
+}
+
+enum MediaCategory {
+  TEAM
+  EVENT
+  PROTOTYPE
+  MILESTONE
+  OTHER
+}
+
+model Media {
+  id           String        @id @default(auto()) @map("_id") @db.ObjectId
+  title        String
+  description  String?
+  imageUrl     String
+  category     MediaCategory @default(OTHER)
+  date         DateTime      @default(now())
+  displayOrder Int           @default(0)
+}
+
+model ActivityLog {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  user      User     @relation(fields: [userId], references: [id])
+  action    String
+  entity    String
+  entityId  String
+  timestamp DateTime @default(now())
+}

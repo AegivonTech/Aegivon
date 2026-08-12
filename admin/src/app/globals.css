@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #0A0F17;
+  --foreground: #FFFFFF;
+  
+  --primary: #00C2FF;
+  --primary-hover: #38bdf8;
+  
+  --secondary: #8AA4BE;
+  --secondary-hover: #FFFFFF;
+
+  --card-bg: rgba(15, 23, 36, 0.7); /* #0F1724 */
+  --border-color: rgba(0, 194, 255, 0.15);
+  
+  --font-sans: 'Inter', sans-serif;
+  --font-heading: 'Outfit', sans-serif;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  background-image: radial-gradient(circle at top right, rgba(0, 194, 255, 0.05), transparent 30%),
+                    radial-gradient(circle at bottom left, rgba(138, 164, 190, 0.05), transparent 40%);
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+@layer utilities {
+  .glass-panel {
+    @apply bg-[var(--card-bg)] backdrop-blur-md border border-[var(--border-color)] shadow-xl;
+  }
+  
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+}
