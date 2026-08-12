@@ -1,4 +1,4 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://aegivon-9sc9-eight.vercel.app';
 const baseUrl = API_URL.endsWith('/') ? API_URL.slice(0, -1) : API_URL;
 
 export const api = (path: string, opts?: RequestInit) => {
