@@ -29,7 +29,7 @@ router.get('/', async (req: Request, res: Response) => {
 });
 
 const updateSchema = z.object({
-  status: z.enum(['NEW', 'IN_PROGRESS', 'RESOLVED', 'SPAM']),
+  status: z.enum(['NEW', 'IN_PROGRESS', 'CONTACTED', 'RESOLVED']),
 });
 
 router.patch('/:id', async (req: Request, res: Response) => {
