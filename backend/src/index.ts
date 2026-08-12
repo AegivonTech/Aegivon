@@ -48,6 +48,10 @@ import adminDashboardRoutes from './routes/admin/dashboard.routes';
 import { requireAdmin } from './middleware/auth.middleware';
 
 // API Routes
+app.get('/', (req, res) => {
+  res.json({ status: 'Aegivon Backend is running', version: '1.0' });
+});
+
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/enquiries', publicLimiter, enquiriesRoutes);
 app.use('/api/v1/applications', publicLimiter, applicationsRoutes);
