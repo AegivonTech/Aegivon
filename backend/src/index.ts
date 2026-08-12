@@ -76,4 +76,4 @@ if (process.env.NODE_ENV !== 'production') {
   });
 }
 
-export default app;
+module.exports = app;
