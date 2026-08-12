@@ -7,7 +7,21 @@ export function GlobalBackground() {
   
   // Rakshak product page has its own specialized background video
   if (pathname === "/products/rakshak") {
-    return null;
+    return (
+      <div className="fixed inset-0 z-0 pointer-events-none bg-[#0a0008]">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full h-full object-cover opacity-60"
+        >
+          <source src="/VIDEO/red_bg.mp4" type="video/mp4" />
+        </video>
+        {/* Subtle overlay so text stays readable, but doesn't block the video entirely */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0a0008]/40 via-[#0a0008]/60 to-[#0a0008]/80" />
+      </div>
+    );
   }
   
   return (
