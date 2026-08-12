@@ -66,8 +66,8 @@ app.use('/api/v1/admin/dashboard', requireAdmin, adminDashboardRoutes);
 
 // Error handling middleware
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
-  console.error(err.stack);
-  res.status(500).json({ error: 'Internal Server Error' });
+  console.error("GLOBAL ERROR:", err);
+  res.status(500).json({ error: 'GLOBAL_ERROR', details: err?.message || String(err) });
 });
 
 if (process.env.NODE_ENV !== 'production') {
