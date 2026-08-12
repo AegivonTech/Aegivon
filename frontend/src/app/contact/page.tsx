@@ -93,11 +93,11 @@ export default function Contact() {
                     <div className="space-y-2">
                       <label className="text-sm font-medium text-secondary uppercase tracking-wider">Enquiry Type</label>
                       <select name="type" required defaultValue="" className="w-full bg-transparent border border-white/10 rounded-md px-4 py-2.5 text-white focus:outline-none focus:border-primary/50 transition-colors appearance-none">
-                        <option value="" disabled>Select a reason...</option>
-                        <option value="GENERAL">Join the Team / General</option>
-                        <option value="INVESTMENT_SUPPORT">Investment / Mentorship</option>
-                        <option value="PRODUCT_RAKSHAK">Early MVP Access / Pilot</option>
-                        <option value="PARTNERSHIP">Partnership</option>
+                        <option value="" disabled className="bg-gray-900">Select a reason...</option>
+                        <option value="GENERAL" className="bg-gray-900">Join the Team / General</option>
+                        <option value="INVESTMENT_SUPPORT" className="bg-gray-900">Investment / Mentorship</option>
+                        <option value="PRODUCT_RAKSHAK" className="bg-gray-900">Early MVP Access / Pilot</option>
+                        <option value="PARTNERSHIP" className="bg-gray-900">Partnership</option>
                       </select>
                     </div>
                     <div className="space-y-2">

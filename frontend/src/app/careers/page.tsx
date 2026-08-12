@@ -228,8 +228,8 @@ export default function Careers() {
                     <label className="text-xs font-bold text-secondary uppercase tracking-widest">Target Designation</label>
                     <div className="relative">
                       <select name="roleId" required defaultValue="" className="w-full bg-transparent/50 border border-white/10 rounded-lg px-5 py-4 text-white focus:outline-none focus:border-primary focus:bg-white/5 transition-all appearance-none cursor-pointer">
-                        <option value="" disabled>Select your role...</option>
-                        {dbRoles.map((r, i) => <option key={i} value={r.id} className="bg-transparent">{r.title}</option>)}
+                        <option value="" disabled className="bg-gray-900">Select your role...</option>
+                        {dbRoles.map((r, i) => <option key={i} value={r.id} className="bg-gray-900">{r.title}</option>)}
                       </select>
                       {/* Using ChevronRight rotated for dropdown icon since we replaced ChevronDown */}
                       <ChevronRight className="absolute right-5 top-1/2 -translate-y-1/2 w-5 h-5 text-secondary pointer-events-none rotate-90" />
