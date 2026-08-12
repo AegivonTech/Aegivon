@@ -1,7 +1,9 @@
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
+const baseUrl = API_URL.endsWith('/') ? API_URL.slice(0, -1) : API_URL;
 
 export const api = (path: string, opts?: RequestInit) => {
-  return fetch(`${API_URL}${path}`, {
+  const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+  return fetch(`${baseUrl}${normalizedPath}`, {
     ...opts,
     headers: {
       'Content-Type': 'application/json',
@@ -13,7 +15,8 @@ export const api = (path: string, opts?: RequestInit) => {
 };
 
 export const apiFormData = (path: string, formData: FormData, opts?: RequestInit) => {
-  return fetch(`${API_URL}${path}`, {
+  const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+  return fetch(`${baseUrl}${normalizedPath}`, {
     ...opts,
     method: 'POST',
     body: formData,
