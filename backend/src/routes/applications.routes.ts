@@ -6,8 +6,8 @@ import prisma from '../lib/prisma';
 
 const router = Router();
 
-// Setup multer for file uploads
-const uploadDir = path.join(process.cwd(), 'uploads');
+// Setup multer for file uploads (use /tmp on Vercel, else local uploads folder)
+const uploadDir = process.env.VERCEL ? '/tmp/uploads' : path.join(process.cwd(), 'uploads');
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
