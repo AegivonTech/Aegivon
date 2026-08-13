@@ -215,6 +215,21 @@ export default function RakshakProduct() {
 
   return (
     <div className="flex flex-col w-full theme-red text-[var(--foreground)] min-h-screen relative">
+      {/* ── Fixed Background Video ── */}
+      <div className="fixed inset-0 z-[-1] pointer-events-none bg-[#0a0008]">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full h-full object-cover opacity-60"
+        >
+          <source src="/VIDEO/red_bg.mp4" type="video/mp4" />
+        </video>
+        {/* Subtle overlay so text stays readable, but doesn't block the video entirely */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0a0008]/40 via-[#0a0008]/60 to-[#0a0008]/80" />
+      </div>
+
       {/* ── Sticky sub-nav ── */}
       <div className={`transition-all duration-300 ${showSubNav ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4 pointer-events-none"}`}>
         <SubNav activeId={activeId} />
