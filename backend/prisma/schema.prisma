@@ -36,6 +36,7 @@ enum EnquiryStatus {
   IN_PROGRESS
   CONTACTED
   RESOLVED
+  ARCHIVED
 }
 
 model Enquiry {
