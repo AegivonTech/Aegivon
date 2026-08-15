@@ -9,28 +9,33 @@ router.get('/', async (req: Request, res: Response) => {
   try {
     const { status, type, search, from, to, page, page_size } = req.query;
     
-    const whereClause: any = {
-      deletedAt: null,
-      status: { not: 'ARCHIVED' }
-    };
+    const andConditions: any[] = [
+      { OR: [{ deletedAt: null }, { deletedAt: { isSet: false } }] },
+      { status: { not: 'ARCHIVED' } }
+    ];
     
     if (status && status !== 'ALL') {
-      whereClause.status = status;
+      andConditions.push({ status });
     }
     if (type && type !== 'ALL') {
-      whereClause.type = type;
+      andConditions.push({ type });
     }
     if (search) {
-      whereClause.OR = [
-        { name: { contains: search as string, mode: 'insensitive' } },
-        { email: { contains: search as string, mode: 'insensitive' } }
-      ];
+      andConditions.push({
+        OR: [
+          { name: { contains: search as string, mode: 'insensitive' } },
+          { email: { contains: search as string, mode: 'insensitive' } }
+        ]
+      });
     }
     if (from || to) {
-      whereClause.createdAt = {};
-      if (from) whereClause.createdAt.gte = new Date(from as string);
-      if (to) whereClause.createdAt.lte = new Date(to as string);
+      const dateFilter: any = {};
+      if (from) dateFilter.gte = new Date(from as string);
+      if (to) dateFilter.lte = new Date(to as string);
+      andConditions.push({ createdAt: dateFilter });
     }
+
+    const whereClause = { AND: andConditions };
 
     const pageNumber = page ? parseInt(page as string, 10) : undefined;
     const pageSize = page_size ? parseInt(page_size as string, 10) : undefined;
@@ -58,25 +63,30 @@ router.get('/archived', requireElevated, async (req: AuthRequest, res: Response)
   try {
     const { type, search, from, to, page, page_size } = req.query;
     
-    const whereClause: any = {
-      deletedAt: null,
-      status: 'ARCHIVED'
-    };
+    const andConditions: any[] = [
+      { OR: [{ deletedAt: null }, { deletedAt: { isSet: false } }] },
+      { status: 'ARCHIVED' }
+    ];
     
     if (type && type !== 'ALL') {
-      whereClause.type = type;
+      andConditions.push({ type });
     }
     if (search) {
-      whereClause.OR = [
-        { name: { contains: search as string, mode: 'insensitive' } },
-        { email: { contains: search as string, mode: 'insensitive' } }
-      ];
+      andConditions.push({
+        OR: [
+          { name: { contains: search as string, mode: 'insensitive' } },
+          { email: { contains: search as string, mode: 'insensitive' } }
+        ]
+      });
     }
     if (from || to) {
-      whereClause.createdAt = {};
-      if (from) whereClause.createdAt.gte = new Date(from as string);
-      if (to) whereClause.createdAt.lte = new Date(to as string);
+      const dateFilter: any = {};
+      if (from) dateFilter.gte = new Date(from as string);
+      if (to) dateFilter.lte = new Date(to as string);
+      andConditions.push({ createdAt: dateFilter });
     }
+
+    const whereClause = { AND: andConditions };
 
     const pageNumber = page ? parseInt(page as string, 10) : undefined;
     const pageSize = page_size ? parseInt(page_size as string, 10) : undefined;
