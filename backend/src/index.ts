@@ -43,6 +43,7 @@ import enquiriesRoutes from './routes/enquiries.routes';
 import applicationsRoutes from './routes/applications.routes';
 import jobRolesRoutes from './routes/jobRoles.routes';
 import adminEnquiriesRoutes from './routes/admin/enquiries.routes';
+import reauthRoutes from './routes/admin/reauth.routes';
 import adminApplicationsRoutes from './routes/admin/applications.routes';
 import adminDashboardRoutes from './routes/admin/dashboard.routes';
 import { requireAdmin } from './middleware/auth.middleware';
@@ -58,6 +59,7 @@ app.use('/api/v1/applications', publicLimiter, applicationsRoutes);
 app.use('/api/v1/job-roles', publicLimiter, jobRolesRoutes);
 
 // Admin API Routes (Protected)
+app.use('/api/v1/admin/reauth', reauthRoutes);
 app.use('/api/v1/admin/enquiries', requireAdmin, adminEnquiriesRoutes);
 app.use('/api/v1/admin/applications', requireAdmin, adminApplicationsRoutes);
 app.use('/api/v1/admin/dashboard', requireAdmin, adminDashboardRoutes);

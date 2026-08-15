@@ -55,7 +55,9 @@ export default function CareersDashboard() {
           setSelectedApplication(null);
         }
       } else {
-        alert("Failed to delete application.");
+        const errorText = await res.text();
+        console.error("Delete failed with status:", res.status, errorText);
+        alert(`Failed to delete application: ${res.status} ${errorText}`);
       }
     } catch (error) {
       console.error("Failed to delete application:", error);

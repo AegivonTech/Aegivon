@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Users, Briefcase, Box, Image as ImageIcon, LogOut, Menu, X } from "lucide-react";
+import { LayoutDashboard, Users, Briefcase, Box, Image as ImageIcon, LogOut, Menu, X, Archive } from "lucide-react";
 import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
 
@@ -27,6 +27,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const navItems = [
     { label: "Dashboard", href: "/", icon: LayoutDashboard },
     { label: "CRM", href: "/crm", icon: Users },
+    { label: "Archived Enquiries", href: "/crm/archived", icon: Archive },
     { label: "Careers", href: "/careers", icon: Briefcase },
     { label: "Products", href: "/products", icon: Box },
     { label: "Media", href: "/media", icon: ImageIcon },

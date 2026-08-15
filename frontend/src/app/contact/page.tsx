@@ -4,7 +4,7 @@ import { api } from "@/lib/api";
 import { SectionWrapper } from "@/components/layout/SectionWrapper";
 import { GlassCard } from "@/components/ui/Cards";
 import { PrimaryButton } from "@/components/ui/Buttons";
-import { Mail, MapPin, QrCode, Linkedin, Twitter } from "lucide-react";
+import { Mail, MapPin, QrCode, Linkedin, Twitter, Instagram } from "lucide-react";
 
 export default function Contact() {
   const [submitted, setSubmitted] = useState(false);
@@ -29,7 +29,12 @@ export default function Contact() {
       if (res.ok) {
         setSubmitted(true);
       } else {
-        setError("Failed to send message. Please try again.");
+        const errorData = await res.json().catch(() => null);
+        if (errorData && errorData.error && Array.isArray(errorData.error)) {
+          setError(errorData.error[0].message || "Validation failed.");
+        } else {
+          setError("Failed to send message. Please try again.");
+        }
       }
     } catch (err) {
       setError("An unexpected error occurred.");
@@ -102,7 +107,7 @@ export default function Contact() {
                     </div>
                     <div className="space-y-2">
                       <label className="text-sm font-medium text-secondary uppercase tracking-wider">Message</label>
-                      <textarea name="message" required rows={4} className="w-full bg-transparent border border-white/10 rounded-md px-4 py-2.5 text-white focus:outline-none focus:border-primary/50 transition-colors resize-none" placeholder="How can we collaborate?"></textarea>
+                      <textarea name="message" required minLength={10} rows={4} className="w-full bg-transparent border border-white/10 rounded-md px-4 py-2.5 text-white focus:outline-none focus:border-primary/50 transition-colors resize-none" placeholder="How can we collaborate?"></textarea>
                     </div>
                     <PrimaryButton type="submit" className="w-full py-3" disabled={loading}>
                       {loading ? "Sending..." : "Send Message"}
@@ -144,17 +149,21 @@ export default function Contact() {
               <div className="pt-8 border-t border-white/5">
                 <GlassCard className="p-6 flex items-center gap-6 border-primary/20 bg-primary/5">
                   <div className="w-24 h-24 bg-white rounded-lg flex items-center justify-center p-2 shrink-0">
-                    <QrCode className="w-full h-full text-black" />
+                    <img 
+                      src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.instagram.com/aegivontech/" 
+                      alt="Instagram QR Code" 
+                      className="w-full h-full object-contain" 
+                    />
                   </div>
                   <div>
                     <h4 className="font-heading font-bold text-lg mb-2">Connect With Us</h4>
                     <p className="text-sm text-secondary mb-4">Follow our journey as we build.</p>
                     <div className="flex gap-4">
-                      <a href="#" className="w-10 h-10 bg-transparent rounded-full flex items-center justify-center border border-white/10 hover:border-primary transition-colors">
-                        <Linkedin className="w-4 h-4 text-white" />
-                      </a>
-                      <a href="#" className="w-10 h-10 bg-transparent rounded-full flex items-center justify-center border border-white/10 hover:border-primary transition-colors">
+                      <a href="https://twitter.com/AegivonTech" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-transparent rounded-full flex items-center justify-center border border-white/10 hover:border-primary transition-colors">
                         <Twitter className="w-4 h-4 text-white" />
+                      </a>
+                      <a href="https://www.instagram.com/aegivontech/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-transparent rounded-full flex items-center justify-center border border-white/10 hover:border-primary transition-colors">
+                        <Instagram className="w-4 h-4 text-white" />
                       </a>
                     </div>
                   </div>

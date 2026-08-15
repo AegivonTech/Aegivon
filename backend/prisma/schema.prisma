@@ -49,6 +49,7 @@ model Enquiry {
   status       EnquiryStatus @default(NEW)
   notes        String?
   createdAt    DateTime      @default(now())
+  deletedAt    DateTime?
 }
 
 enum JobStatus {

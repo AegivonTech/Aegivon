@@ -109,12 +109,46 @@ const PHASE_LABELS: Record<string, string> = {
 };
 
 export default function RakshakProduct() {
-  const shouldReduceMotion = useReducedMotion() ?? false;
+  const [activeId, setActiveId] = useState("");
+  const [showSubNav, setShowSubNav] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
+
+  // Hide the global background video from layout.tsx when on this page
+  useEffect(() => {
+    const hideGlobalBg = () => {
+      const videos = document.querySelectorAll('video');
+      videos.forEach(video => {
+        const source = video.querySelector('source');
+        if (source && source.getAttribute('src') === '/VIDEO/BG.mp4') {
+          const wrapper = video.parentElement;
+          if (wrapper && wrapper.classList.contains('fixed')) {
+            wrapper.style.display = 'none';
+          }
+        }
+      });
+    };
+    
+    hideGlobalBg();
+    
+    // In case the video loads slightly after the page
+    const timeoutId = setTimeout(hideGlobalBg, 100);
+
+    return () => {
+      clearTimeout(timeoutId);
+      const videos = document.querySelectorAll('video');
+      videos.forEach(video => {
+        const source = video.querySelector('source');
+        if (source && source.getAttribute('src') === '/VIDEO/BG.mp4') {
+          const wrapper = video.parentElement;
+          if (wrapper && wrapper.classList.contains('fixed')) {
+            wrapper.style.display = '';
+          }
+        }
+      });
+    };
+  }, []);
 
   // ── Scrollspy ──
-  const [activeId, setActiveId] = useState("overview");
-  const [showSubNav, setShowSubNav] = useState(false);
-
   useEffect(() => {
     const heroEl = document.getElementById("overview");
     const onScroll = () => {
@@ -215,8 +249,8 @@ export default function RakshakProduct() {
 
   return (
     <div className="flex flex-col w-full theme-red text-[var(--foreground)] min-h-screen relative">
-      {/* ── Fixed Background Video ── */}
-      <div className="fixed inset-0 z-[-1] pointer-events-none bg-[#0a0008]">
+      {/* ── Fixed Background Video (Overrides layout background) ── */}
+      <div className="fixed inset-0 z-[-1] bg-[#0a0008] pointer-events-none">
         <video
           autoPlay
           loop
@@ -226,10 +260,9 @@ export default function RakshakProduct() {
         >
           <source src="/VIDEO/red_bg.mp4" type="video/mp4" />
         </video>
-        {/* Subtle overlay so text stays readable, but doesn't block the video entirely */}
+        {/* Subtle overlay so text stays readable */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#0a0008]/40 via-[#0a0008]/60 to-[#0a0008]/80" />
       </div>
-
       {/* ── Sticky sub-nav ── */}
       <div className={`transition-all duration-300 ${showSubNav ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4 pointer-events-none"}`}>
         <SubNav activeId={activeId} />
