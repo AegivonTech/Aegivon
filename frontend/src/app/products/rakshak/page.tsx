@@ -189,7 +189,7 @@ export default function RakshakProduct() {
   const statsRef = useRef<HTMLDivElement>(null);
   const statsInView = useInView(statsRef, { once: true, margin: "-100px" });
 
-  const stat300 = useCountUp(300, 1400, statsInView, shouldReduceMotion);
+  const stat300 = useCountUp(300, 1400, statsInView, shouldReduceMotion ?? undefined);
 
   // ─── Data ──────────────────────────────────────────────────────────────────
   const intendedEnvironments = [
