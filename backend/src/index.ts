@@ -46,7 +46,13 @@ import adminEnquiriesRoutes from './routes/admin/enquiries.routes';
 import reauthRoutes from './routes/admin/reauth.routes';
 import adminApplicationsRoutes from './routes/admin/applications.routes';
 import adminDashboardRoutes from './routes/admin/dashboard.routes';
+import analyticsRoutes from './routes/analytics.routes';
 import { requireAdmin } from './middleware/auth.middleware';
+
+// Basic health check
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() });
+});
 
 // API Routes
 app.get('/', (req, res) => {
@@ -57,6 +63,7 @@ app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/enquiries', publicLimiter, enquiriesRoutes);
 app.use('/api/v1/applications', publicLimiter, applicationsRoutes);
 app.use('/api/v1/job-roles', publicLimiter, jobRolesRoutes);
+app.use('/api/v1/analytics', analyticsRoutes);
 
 // Admin API Routes (Protected)
 app.use('/api/v1/admin/reauth', reauthRoutes);

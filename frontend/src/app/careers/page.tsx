@@ -178,7 +178,7 @@ export default function Careers() {
       </section>
 
       {/* Application Form & Success Popup */}
-      <section className="py-24 bg-transparent relative z-10">
+      <section id="application-form" className="py-24 bg-transparent relative z-10">
         <SectionWrapper>
           <div className="max-w-3xl mx-auto">
             <div className="text-center mb-12">
@@ -316,7 +316,12 @@ export default function Careers() {
                 className="w-full tracking-widest py-4"
                 onClick={() => {
                   setSelectedRole(null);
-                  setTimeout(() => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }), 100);
+                  setTimeout(() => {
+                    const formSection = document.getElementById('application-form');
+                    if (formSection) {
+                      formSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                  }, 100);
                 }}
               >
                 PROCEED TO APPLICATION

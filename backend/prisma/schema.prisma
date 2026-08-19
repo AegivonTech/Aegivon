@@ -195,3 +195,12 @@ model ActivityLog {
   entityId  String
   timestamp DateTime @default(now())
 }
+
+model SiteAnalytics {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  eventType String   // E.g. "PAGE_VIEW" or "CLICK"
+  path      String
+  element   String?
+  sessionId String?
+  createdAt DateTime @default(now())
+}

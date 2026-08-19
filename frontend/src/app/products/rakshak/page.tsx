@@ -13,6 +13,7 @@ import {
   Award, ArrowRight, Rocket, FlaskConical, Flag, Maximize2, TestTube2,
   ScanSearch, Lightbulb, CheckSquare
 } from "lucide-react";
+import { trackEvent } from "@/components/analytics/Tracker";
 
 // ─── Sub-nav config ────────────────────────────────────────────────────────────
 const NAV_ITEMS = [
@@ -313,7 +314,7 @@ export default function RakshakProduct() {
                     Explore Capabilities <ArrowRight className="w-4 h-4" />
                   </PrimaryButton>
                 </Link>
-                <Link href="/contact">
+                <Link href="/contact" onClick={() => trackEvent("CLICK", "RAKSHAK_INTEREST")}>
                   <SecondaryButton>Partner With Us</SecondaryButton>
                 </Link>
               </motion.div>
@@ -793,7 +794,7 @@ export default function RakshakProduct() {
               We are actively seeking institutions for closed-beta deployment, mentors in deep-tech scaling, and early-stage investors aligned with our mission to democratize safety.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Link href="/contact">
+              <Link href="/contact" onClick={() => trackEvent("CLICK", "RAKSHAK_INTEREST")}>
                 <PrimaryButton className="text-lg px-10 py-4 w-full sm:w-auto shadow-[0_0_30px_rgba(225,29,46,0.4)]">
                   Partner with Us
                 </PrimaryButton>

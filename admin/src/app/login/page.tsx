@@ -39,8 +39,8 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen p-4">
-      <div className="w-full max-w-md">
+    <div className="flex items-center justify-center min-h-screen p-4 relative overflow-hidden">
+      <div className="w-full max-w-md relative z-10">
         <div className="text-center mb-8">
           <h1 className="text-2xl font-heading font-bold text-white tracking-wider">AEGIVON <span className="text-primary">COMMAND</span></h1>
           <p className="text-secondary mt-2">Restricted Access Area</p>
